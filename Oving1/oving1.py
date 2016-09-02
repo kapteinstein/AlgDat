@@ -1,7 +1,4 @@
 from sys import stdin
-import timeit
-tstart = timeit.default_timer()
-
 
 class Kubbe:
     vekt = None
@@ -12,15 +9,12 @@ class Kubbe:
 
 def spor(kubbe):
     # SKRIV DIN KODE HER
-    # kubbe = forste
     tempHoyest = kubbe.vekt
-
-    while True:
-        kubbe = kubbe.neste
+    
+    while kubbe != None:
         if kubbe.vekt > tempHoyest:
             tempHoyest = kubbe.vekt
-        if kubbe.neste == None:
-            break
+        kubbe = kubbe.neste
     return(tempHoyest)
 
 # Oppretter lenket liste
@@ -36,5 +30,3 @@ for linje in stdin:
 
 # Kaller loesningsfunksjonen og skriver ut resultatet
 print(spor(forste))
-tend = timeit.default_timer()
-print('time: {}'.format(tend - tstart))
