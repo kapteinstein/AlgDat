@@ -24,10 +24,10 @@ def merge(A, B):
             C.append(A.popleft())
         else:
             C.append(B.popleft())
-    while len(A) != 0:
-        C.append(A.popleft())
-    while len(B) != 0:
-        C.append(B.popleft())
+    if len(A) != 0:
+        C += A
+    if len(B) != 0:
+        C += B
     return(C)
 
 def main():
