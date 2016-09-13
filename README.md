@@ -1,2 +1,2 @@
 # TDT4120
-Exercises and misc for TDT4120: Algoritmer og datastrukturer
+Exercises and Misc for TDT4120: Algoritmer og datastrukturer
