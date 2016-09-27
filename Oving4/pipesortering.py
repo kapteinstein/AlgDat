@@ -1,7 +1,6 @@
-#!/usr/bin/python3
-
 from sys import stdin
 import copy
+
 
 def radix_sort2(A):
     l2 = [0]*len(A)
@@ -13,8 +12,8 @@ def radix_sort2(A):
                 continue
             else:
                 bucket[int((i/mod) % 10)] += 1
-        if bucket[0] == len(A):
-            break
+        #if bucket[0] == len(A):
+        #    break
         for i in range(1, 10):
             bucket[i] += bucket[i - 1]
         for i in reversed(A):
@@ -30,9 +29,15 @@ def search(A, target, L, R, up):
     while (A[m] != target):
         if L > R:
             if up:
-                return(A[L])
+                if L == len(A):
+                    return(A[-1])
+                else:
+                    return(A[L])
             else:
-                return(A[R])
+                if L == 0:
+                    return(A[0])
+                else:
+                    return(A[R])
         m = int((L+R)/2)
 
         if A[m] < target:
