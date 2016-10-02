@@ -61,10 +61,13 @@ def counting_sort(A, char_count):
         count[chars.index(itemgetter(char_count)(x))] += 1
     total = 0
     for i in range(1, 26):
-        count[i] += count[i-1]
+        old_Count = count[i]
+        count[i] = total
+        total += old_Count
     for x in A:
         output[count[chars.index(itemgetter(char_count)(x))] - 1]= x
         count[chars.index((itemgetter(char_count)(x)))] += 1
+
     return(output)
 
 def randix_sort(A, k):
