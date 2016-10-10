@@ -7,7 +7,6 @@ from operator import itemgetter
 from collections import defaultdict, deque
 import cProfile
 
-
 def instertion_sort(A):
     # instertion_sort
     for j in range(1, len(A)):
@@ -75,21 +74,51 @@ def counting_sort(A, char_count):
 
     return(output)
 
-def randix_sort(A, k):
+def radix_sort(A, k):
     # radix sort
     for i in reversed(range(k)):
         A = counting_sort(A, i)
     return(A)
 
-def radix_sort2(A, k):
+def radix_sort3(aList, k):
     # try to implement the one from wikipedia
-    pass
+    RADIX = 26
+    maxLength = False
+    tmp , placement = -1, k-1
+
+    while not maxLength:
+        maxLength = True
+        # declare and initialize buckets
+        buckets = [list() for _ in range( RADIX )]
+
+        # split aList between lists
+        for  i in aList:
+            try:
+                tmp = chars.index(itemgetter(placement)(i))
+            except:
+                tmp = 0
+            buckets[tmp].append(i)
+            if maxLength and tmp > 0:
+                maxLength = False
+
+        # empty lists into aList array
+        a = 0
+        for b in range( RADIX ):
+            buck = buckets[b]
+            for i in buck:
+                aList[a] = i
+                a += 1
+
+        # move to next digit
+        if placement == 0:
+            return(aList)
+
+        placement -= 1  
 
 def merge_lists(A):
     while len(A) != 1:
         A.append(merge(A.popleft(), A.popleft()))
     return(A)
-
 
 def merge(A, B):
     # merge A and B, both already sorted lists
@@ -107,6 +136,24 @@ def merge(A, B):
         C += B
     return(C)
 
+def merge_lists2(A):
+    while True:
+        C = deque([])
+        liste1 = A.popleft()
+        liste2 = A.popleft()
+        while len(liste1) != 0 and len(liste2) != 0:
+            if liste1[0] <= liste2[0]:
+                C.append(liste1.popleft())
+            else:
+                C.append(liste2.popleft())
+        if len(liste1) != 0:
+            C += liste1
+        if len(liste2) != 0:
+            C += liste2
+        A.append(C)
+        if len(A) == 1:
+            return(A)
+
 
 def flexradix(A, length_of_greatest):
 
@@ -123,17 +170,17 @@ def flexradix(A, length_of_greatest):
     for key in d:
         n = len(d[key])  # number of elements to sort
         k = key  # wordsize
-
         if (n < 10) and (n > 1):
             # use insertion sort if the list is short
             to_be_merged.append(instertion_sort(d[key]))
-        elif abs(k/n - 1) < 0.5 and k > 5:
+            #to_be_merged.append(quicksort(d[key], 0, len(d[key])-1))
+        elif k > 17:
             # use quicsort if the list is longer and the wordsize approx n
             to_be_merged.append(quicksort(d[key], 0, len(d[key])-1))
         elif (n >= 10):
             # else use radix sort
+            to_be_merged.append(radix_sort3(d[key], k))
             #to_be_merged.append(quicksort(d[key], 0, len(d[key])-1))
-            to_be_merged.append(randix_sort(d[key], k))
         else:
             # list of length n is already sorted
             to_be_merged.append(d[key])
